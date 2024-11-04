@@ -2,7 +2,7 @@
 Turtleman is a customer management service. 
 The project name is not a reference to the slowness of the turtle but rather draws its inspiration from the protective shell of its namesake.
 Turtleman protects your customer data like a turtle's protective shell.
-It will start the journey with your customer data and gross the finish line with your customer data safe and secure!
+It will start the journey with your customer data and cross the finish line with your customer data safe and secure!
 
 # How to run Turtleman
 ¯\\_(ツ)_/¯
