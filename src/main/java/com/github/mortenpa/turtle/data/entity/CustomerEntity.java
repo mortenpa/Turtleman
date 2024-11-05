@@ -1,8 +1,11 @@
 package com.github.mortenpa.turtle.data.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "customer")
@@ -11,31 +14,46 @@ public class CustomerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
+    @NotEmpty
+    @Size(max = 50)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
+    @NotEmpty
+    @Size(max = 50)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @NotEmpty
+    @Email
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(updatable = false)
-    private LocalDateTime createdDtime;
+    @Column(name = "created_datetime", updatable = false)
+    private OffsetDateTime createdDtime;
 
-    @Column(updatable = false)
-    private LocalDateTime modifiedDtime;
+    @Column(name = "modified_datetime", updatable = false)
+    private OffsetDateTime modifiedDtime;
 
-    public CustomerEntity() {}
+    public CustomerEntity() {
+        this.createdDtime = OffsetDateTime.now();
+        this.modifiedDtime = OffsetDateTime.now();
+    }
 
     public CustomerEntity(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.createdDtime = OffsetDateTime.now();
+        this.modifiedDtime = OffsetDateTime.now();
     }
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -62,11 +80,16 @@ public class CustomerEntity {
         this.email = email;
     }
 
-    public LocalDateTime getCreatedDtime() {
+    public OffsetDateTime getCreatedDtime() {
         return createdDtime;
     }
 
-    public LocalDateTime getModifiedDtime() {
+    public OffsetDateTime getModifiedDtime() {
         return modifiedDtime;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + firstName + ", " + lastName + ", " + email + "]";
     }
 }

@@ -2,6 +2,7 @@ package com.github.mortenpa.turtle.service;
 
 import com.github.mortenpa.turtle.data.entity.CustomerEntity;
 import com.github.mortenpa.turtle.repository.CustomerRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public CustomerEntity addOrModify(CustomerEntity customerEntity) {
+    public CustomerEntity addOrModify(@Valid CustomerEntity customerEntity) {
         return customerRepository.save(customerEntity);
     }
 

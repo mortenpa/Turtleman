@@ -14,12 +14,12 @@ databaseChangeLog:
                   primaryKey: true
                   nullable: false
             - column:
-                name: firstName
+                name: first_name
                 type: VARCHAR(50)
                 constraints:
                   nullable: false
             - column:
-                name: lastName
+                name: last_name
                 type: VARCHAR(50)
                 constraints:
                   nullable: false
@@ -30,13 +30,13 @@ databaseChangeLog:
                   nullable: false
                   unique: true
             - column:
-                name: createdDtime
+                name: created_datetime
                 type: TIMESTAMP WITH TIME ZONE
                 constraints:
                   nullable: false
                 defaultValueComputed: CURRENT_TIMESTAMP
             - column:
-                name: modifiedDtime
+                name: modified_datetime
                 type: TIMESTAMP WITH TIME ZONE
                 constraints:
                   nullable: false
