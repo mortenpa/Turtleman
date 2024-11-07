@@ -20,7 +20,6 @@ public class CustomerRestExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(CustomerRestExceptionHandler.class);
 
 
-
     @ExceptionHandler(DuplicateEmailException.class)
     public ResponseEntity<CustomerApiResponse> handleDataDuplicateEmailException(DuplicateEmailException exception) {
         log.error("Duplicate email violation: {}", exception.getMessage(), exception);
