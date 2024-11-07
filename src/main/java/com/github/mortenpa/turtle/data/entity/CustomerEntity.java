@@ -2,7 +2,6 @@ package com.github.mortenpa.turtle.data.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 import java.time.OffsetDateTime;
@@ -14,38 +13,46 @@ public class CustomerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotEmpty
-    @Size(max = 50)
+    @Size(min=1, max = 50)
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @NotEmpty
-    @Size(max = 50)
+    @Size(min=1, max = 50)
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @NotEmpty
     @Email
+    @Size(min=3, max=254)
     @Column(nullable = false, unique = true)
     private String email;
 
     @Column(name = "created_datetime", updatable = false)
     private OffsetDateTime createdDtime;
 
-    @Column(name = "modified_datetime", updatable = false)
+    @Column(name = "modified_datetime")
     private OffsetDateTime modifiedDtime;
 
-    public CustomerEntity() {
-        this.createdDtime = OffsetDateTime.now();
-        this.modifiedDtime = OffsetDateTime.now();
+    @PrePersist
+    private void insertDatetimes() {
+        // Set both createdDtime and modifiedDtime only if createdDtime is null (i.e., on creation)
+        if (createdDtime == null) {
+            OffsetDateTime now = OffsetDateTime.now();
+            createdDtime = now;
+            modifiedDtime = now;
+        }
     }
+
+    @PreUpdate
+    private void updateModifiedDateTime() {
+        modifiedDtime = OffsetDateTime.now();
+    }
+
+    public CustomerEntity() {}
 
     public CustomerEntity(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.createdDtime = OffsetDateTime.now();
-        this.modifiedDtime = OffsetDateTime.now();
     }
 
     public long getId() {
@@ -84,12 +91,20 @@ public class CustomerEntity {
         return createdDtime;
     }
 
+    public void setCreatedDtime(OffsetDateTime createdDtime) {
+        this.createdDtime = createdDtime;
+    }
+
     public OffsetDateTime getModifiedDtime() {
         return modifiedDtime;
     }
 
+    public void setModifiedDtime(OffsetDateTime modifiedDtime) {
+        this.modifiedDtime = modifiedDtime;
+    }
+
     @Override
     public String toString() {
-        return "[" + firstName + ", " + lastName + ", " + email + "]";
+        return "CustomerEntity [" + firstName + ", " + lastName + ", " + email + " " + createdDtime + ", " + modifiedDtime + "]";
     }
 }

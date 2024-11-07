@@ -41,10 +41,3 @@ databaseChangeLog:
                 constraints:
                   nullable: false
                 defaultValueComputed: CURRENT_TIMESTAMP
-        - sql:
-            dbms: h2
-            sql: |
-                CREATE TRIGGER customer_update_modified
-                BEFORE UPDATE ON customer
-                FOR EACH ROW
-                CALL "com.github.mortenpa.turtle.repository.database.trigger.CustomerUpdateModified"
